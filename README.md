@@ -8,5 +8,6 @@ import os
 os.chdir("/content/drive/My Drive")
 
 ## Step 2
-- Create a new colab file, and download code files by:   
-!git clone https://github.com/xinluo2018/Earth-surface-water-mapping.git
+- Create a new colab file, type the following commands:   
+!git clone https://github.com/xinluo2018/Earth-surface-water-mapping.git  
+!os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")
