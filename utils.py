@@ -4,19 +4,6 @@
 # In[ ]:
 
 
-# mount on google drive
-from google.colab import drive
-drive.mount('/content/drive/')
-# to the user's work directory
-import os
-os.chdir("/content/drive/My Drive/Colab/WaterMapping/Github_upload")
-# !ls
-# !nvidia-smi
-
-
-# In[ ]:
-
-
 try:
     get_ipython().magic(u'tensorflow_version 2.x')
 except Exception:

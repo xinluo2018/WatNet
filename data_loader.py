@@ -9,7 +9,7 @@ from google.colab import drive
 drive.mount('/content/drive/')
 # go to your code files directory
 import os
-os.chdir("/content/drive/My Drive/Colab/WaterMapping/Github_upload")
+os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")
 # !ls
 # !nvidia-smi
 
