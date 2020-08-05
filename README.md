@@ -9,4 +9,4 @@ os.chdir("/content/drive/My Drive")
 ## Step 2
 -  Enter the following commands for 1)download the code files, 2)go to your work directory:   
 !git clone https://github.com/xinluo2018/Earth-surface-water-mapping.git  
-!os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")
+os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")
