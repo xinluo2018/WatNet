@@ -1,6 +1,6 @@
 # Earth Surface Water Mapping with Satellite Image
 ## Step 1
-- Create a new colab file, then enter the commands for 1)Mount on google drive, 2) go to your root directory.    
+- Create a new colab file, then enter the commands for 1)Mount on google drive, 2) go to your root directory:    
 from google.colab import drive
 drive.mount('/content/drive/')
 import os  
