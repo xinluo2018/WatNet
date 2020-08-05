@@ -81,7 +81,7 @@ def writeTiff(im_data, im_geotrans, im_proj, path_out):
 # In[ ]:
 
 
-## accuray assessemnt functions
+## Accuray assessemnt functions
 def acc_patch(Patch_Truth, outp_Patch):
     '''
     input: patch truth and patch output

@@ -106,7 +106,7 @@ def get_scene(folder_Scenes, folder_Truths, PATCH_SIZE):
     Scenes = [np.clip(Scenes/10000, 0, 1) for Scenes in Scenes]  #   Normalization
     return Scenes, Truths
 
-def get_patch(Scenes, Truths, BATCH_SIZE, BUFFER_SIZE):
+def get_patch(Scenes, Truths, PATCH_SIZE, BATCH_SIZE, BUFFER_SIZE):
     ## input Scenes and Truths are the list datatype
     ## return tf.data.Dataset
     Crop_Ratios = np.ones(len(Scenes), dtype=np.int)
