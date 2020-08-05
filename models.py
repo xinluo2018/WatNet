@@ -9,15 +9,14 @@ from google.colab import drive
 drive.mount('/content/drive/')
 import os
 os.chdir("/content/drive/My Drive/Colab/WaterMapping/Github_upload")
-get_ipython().system(u'ls')
+# !ls
 # !nvidia-smi
 
 
-# In[2]:
+# In[ ]:
 
 
 try:
-    # %tensorflow_version only exists in Colab.
     get_ipython().magic(u'tensorflow_version 2.x')
 except Exception:
     pass
@@ -28,7 +27,7 @@ import tensorflow.keras.layers as layers
 import tensorflow.keras.models as models
 
 
-# In[3]:
+# In[ ]:
 
 
 ##### MobileNetV2
@@ -88,7 +87,7 @@ def MobileNetV2(input_shape, nclasses=2):
     return model
 
 
-# In[6]:
+# In[ ]:
 
 
 def Upsample(tensor, size_1):  

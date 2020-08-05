@@ -4,21 +4,20 @@
 # In[ ]:
 
 
-# 挂载google drive
+# mount on google drive
 from google.colab import drive
 drive.mount('/content/drive/')
-# 切换工作路径
+# to the user's work directory
 import os
 os.chdir("/content/drive/My Drive/Colab/WaterMapping/Github_upload")
-get_ipython().system(u'ls')
+# !ls
 # !nvidia-smi
 
 
-# In[3]:
+# In[ ]:
 
 
 try:
-    # %tensorflow_version only exists in Colab.
     get_ipython().magic(u'tensorflow_version 2.x')
 except Exception:
     pass
@@ -28,26 +27,32 @@ import numpy as np
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
 
-# In[4]:
+# In[ ]:
 
 
-### 读写影像
+### .tiff image reading
 def readTiff(path_in):
+    '''
+    return: numpy array, dimentions order: (row, col, band)
+    '''
     RS_Data=gdal.Open(path_in)
-    im_col = RS_Data.RasterXSize  # 栅格矩阵的列数
-    im_row = RS_Data.RasterYSize  # 栅格矩阵的行数
-    im_bands =RS_Data.RasterCount  # 波段数
-    im_geotrans = RS_Data.GetGeoTransform()  # 获取仿射矩阵信息
-    im_proj = RS_Data.GetProjection()  # 获取投影信息
-    RS_Data = RS_Data.ReadAsArray(0, 0, im_col, im_row)  # 获取参考影像数据数据
+    im_col = RS_Data.RasterXSize  # 
+    im_row = RS_Data.RasterYSize  # 
+    im_bands =RS_Data.RasterCount  # 
+    im_geotrans = RS_Data.GetGeoTransform()  # 
+    im_proj = RS_Data.GetProjection()  # 
+    RS_Data = RS_Data.ReadAsArray(0, 0, im_col, im_row)  # 
     if im_bands > 1:
-        RS_Data = np.transpose(RS_Data, (1, 2, 0)).astype(np.float)  # 调整维度顺序，调整为行，列，波段数
+        RS_Data = np.transpose(RS_Data, (1, 2, 0)).astype(np.float)  # 
         return RS_Data, im_geotrans, im_proj, im_row, im_col, im_bands
     else:
         return RS_Data,im_geotrans,im_proj,im_row,im_col,im_bands
 
-###  保存含有坐标投影信息的tif函数,输入影像数据存储格式为行,列，波段数，或行，列
+###  .tiff image write
 def writeTiff(im_data, im_geotrans, im_proj, path_out):
+    '''
+    im_data: tow dimentions (order: row, col),or three dimentions (order: row, col, band)
+    '''
     if 'int8' in im_data.dtype.name:
         datatype = gdal.GDT_Byte
     elif 'int16' in im_data.dtype.name:
@@ -59,12 +64,11 @@ def writeTiff(im_data, im_geotrans, im_proj, path_out):
         im_bands, im_height, im_width = im_data.shape
     else:
         im_bands,(im_height, im_width) = 1,im_data.shape
-        #创建文件
     driver = gdal.GetDriverByName("GTiff")
     dataset = driver.Create(path_out, im_width, im_height, im_bands, datatype)
     if(dataset!= None):
-        dataset.SetGeoTransform(im_geotrans)    # 写入仿射变换参数
-        dataset.SetProjection(im_proj)      # 写入投影
+        dataset.SetGeoTransform(im_geotrans)    # 
+        dataset.SetProjection(im_proj)      # 
     if im_bands > 1:
         for i in range(im_bands):
             dataset.GetRasterBand(i+1).WriteArray(im_data[i])
@@ -74,10 +78,15 @@ def writeTiff(im_data, im_geotrans, im_proj, path_out):
         del dataset
 
 
-# In[5]:
+# In[ ]:
 
 
+## accuray assessemnt functions
 def acc_patch(Patch_Truth, outp_Patch):
+    '''
+    input: patch truth and patch output
+    return: overall accuracy and mean IoU
+    '''
     outp_Patch = tf.where(outp_Patch > 0.5, 1, 0)
     m_OA = tf.keras.metrics.BinaryAccuracy()
     m_OA.update_state(Patch_Truth, outp_Patch)
@@ -86,10 +95,6 @@ def acc_patch(Patch_Truth, outp_Patch):
     m_MIoU.update_state(Patch_Truth, outp_Patch)
     Acc_MIoU = m_MIoU.result().numpy()
     return Acc_OA, Acc_MIoU
-
-
-# In[6]:
-
 
 def get_sample(path_sam, label):
     '''
@@ -107,15 +112,17 @@ def get_sample(path_sam, label):
 
 def acc_sample(cla_map,sam):
     '''
-    Arguments: sample for testing: array(num_samples,3),
-          col 1,2,3 are the row,col and label of the testing samples.
-    Return: the overall accuracy and confusion matrix
+    Arguments: 
+            cla_map: classification result of the full image
+            sam: array(num_samples,3), col 1,2,3 are the row,col and label of the testing samples.
+    Return: 
+            the overall accuracy and confusion matrix
     '''
     sam_result = []
     for i in range(sam.shape[0]):
         sam_result.append(cla_map[sam[i,0],sam[i,1]])
     sam_result = np.array(sam_result)
-    acc = np.around(accuracy_score(sam[:,2],sam_result),3)
+    acc = np.around(accuracy_score(sam[:,2],sam_result),4)
     confus_mat = confusion_matrix(sam[:,2],sam_result) # 
     confus_mat_per = confus_mat/np.tile(np.sum(confus_mat, axis = 0),(confus_mat.shape[0],1))  # producer's accuracy 
     return acc, confus_mat_per

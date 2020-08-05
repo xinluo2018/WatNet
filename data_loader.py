@@ -1,24 +1,23 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[ ]:
 
 
-# 挂载google drive
+# mount on google drive
 from google.colab import drive
 drive.mount('/content/drive/')
-# 切换工作路径
+# go to your code files directory
 import os
 os.chdir("/content/drive/My Drive/Colab/WaterMapping/Github_upload")
 # !ls
 # !nvidia-smi
 
 
-# In[12]:
+# In[ ]:
 
 
 try:
-    # %tensorflow_version only exists in Colab.
     get_ipython().magic(u'tensorflow_version 2.x')
 except Exception:
     pass
@@ -29,17 +28,7 @@ import pathlib
 from utils import readTiff
 
 
-# In[13]:
-
-
-folder_TrainScenes = '/content/drive/My Drive/Colab/WaterMapping/TrainingData/TrainingScene/' 
-folder_TrainTruths = '/content/drive/My Drive/Colab/WaterMapping/TrainingData/TrainingTruth/'
-PATCH_SIZE = 512
-BATCH_SIZE = 4
-BUFFER_SIZE = 200
-
-
-# In[14]:
+# In[ ]:
 
 
 ###  Get the pathes (string) corresponding to image pathes, return a list
@@ -140,13 +129,13 @@ def get_patch(Scenes, Truths, BATCH_SIZE, BUFFER_SIZE):
 # In[ ]:
 
 
+###### test the data loader functions
+# folder_TrainScenes = '/content/drive/My Drive/Colab/WaterMapping/TrainingData/TrainingScene/' 
+# folder_TrainTruths = '/content/drive/My Drive/Colab/WaterMapping/TrainingData/TrainingTruth/'
+# PATCH_SIZE = 512
+# BATCH_SIZE = 4
+# BUFFER_SIZE = 200
 # Scenes, Truths = get_scene(folder_TrainScenes, folder_TrainTruths, PATCH_SIZE)
 # TrainSet = get_patch(Scenes, Truths, BATCH_SIZE, BUFFER_SIZE)
 # TrainSet
-
-
-# In[8]:
-
-
-
 
