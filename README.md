@@ -13,5 +13,5 @@ os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")*
 
 
 ## Step 3
-- Surface water mapping through running the code file **_infer_demo.ipynb_**, the user can replace your own sentinel-2 image (bands order: blue-green-red-nir-swir1-swir2) in the test_image_demo directory.  
+- Surface water mapping through running the code file **_infer_demo.ipynb_**, the user can replace your own sentinel-2 image in the test_image_demo directory. Bands order is blue-green-red-nir-swir1-swir2, and the 20-m bands should be downsampled to 10-m resolution.   
 - With the Dataset, the user also can train the WatNet through running the code file **_trainer.ipynb_**.  
