@@ -2,9 +2,9 @@
 ## Step 1
 - Go to your google drive, create a new colab file, and then enter the commands for 1)Mount on google drive, 2) go to your root directory:    
 from google.colab import drive  
-drive.mount('/content/drive/')
-import os  
-os.chdir("/content/drive/My Drive")
+drive.mount('/content/drive/')  
+import os    
+os.chdir("/content/drive/My Drive")  
 
 ## Step 2
 -  Enter the following commands for 1)download the code files, 2)go to your work directory:   
