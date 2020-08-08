@@ -1,5 +1,5 @@
 # Earth Surface Water Mapping with Satellite Image
-**_We recommend the user running our code in the google colab platform, thus any environment configuration is required for your computer._** 
+**_We recommend the google colab platform for running of our code, thus any environment configuration is required for your computer._** 
 ## Step 1
 - Go to your google drive, create a new colab file, and then enter the commands for 1)Mount on google drive, 2) go to your root directory:    
 *from google.colab import drive  
