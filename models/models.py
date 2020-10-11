@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
 
 try:
     get_ipython().magic(u'tensorflow_version 2.x')
@@ -14,8 +9,6 @@ import tensorflow.keras.backend as backend
 import tensorflow.keras.layers as layers
 import tensorflow.keras.models as models
 
-
-# In[ ]:
 
 
 ##### MobileNetV2
@@ -75,9 +68,7 @@ def MobileNetV2(input_shape, nclasses=2):
     return model
 
 
-# In[ ]:
-
-
+##### Improved DeepLabV3+
 def Upsample(tensor, size_1):  
     '''bilinear upsampling'''
     y = tf.image.resize(images=tensor, size=size_1)
@@ -179,4 +170,3 @@ def DeepLabV3Plus_improve(input_shape, base_model, d_feature, m_feature, l_featu
     model = models.Model(inputs=base_model.input, outputs=x_2, name='DeepLabV3_Plus_improve')
     print(f'*** Output_Shape => {model.output_shape} ***')
     return model
-
