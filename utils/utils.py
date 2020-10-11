@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
 
 try:
     get_ipython().magic(u'tensorflow_version 2.x')
@@ -10,12 +5,9 @@ except Exception:
     pass
 import tensorflow as tf
 from osgeo import gdal
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
-
-
-# In[ ]:
-
 
 ### .tiff image reading
 def readTiff(path_in):
@@ -64,9 +56,20 @@ def writeTiff(im_data, im_geotrans, im_proj, path_out):
         dataset.GetRasterBand(1).WriteArray(im_data)
         del dataset
 
-
-# In[ ]:
-
+def imgShow(img, num_bands, clip_percent):
+    '''
+    Arguments: 
+        img: (row, col, band)
+        num_bands: a list/tuple, [red_band,green_band,blue_band]
+        clip_percent: for linear strech, value within the range of 0-100. 
+    '''
+    img_color = img[:,:,[num_bands[0],num_bands[1],num_bands[2]]]
+    where_are_NaNs = np.isnan(img_color)
+    img_color[where_are_NaNs] = 0
+    img_color_nor = (img_color-np.min(img_color))/(np.max(img_color)-np.min(img_color))
+    img_color_nor_hist = np.percentile(img_color_nor, [clip_percent, 100-clip_percent])
+    img_color_nor_clip = (img_color_nor-img_color_nor_hist[0])/(img_color_nor_hist[1]-img_color_nor_hist[0])
+    plt.imshow(img_color_nor_clip)
 
 ## Accuray assessemnt functions
 def acc_patch(Patch_Truth, outp_Patch):
@@ -113,4 +116,3 @@ def acc_sample(cla_map,sam):
     confus_mat = confusion_matrix(sam[:,2],sam_result) # 
     confus_mat_per = confus_mat/np.tile(np.sum(confus_mat, axis = 0),(confus_mat.shape[0],1))  # producer's accuracy 
     return acc, confus_mat_per
-
