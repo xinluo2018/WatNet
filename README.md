@@ -13,7 +13,7 @@
   ~~~
 
 ## Step 2
-- Enter the following commands for 1)download the code files, 2) go to your work directory:   
+- Enter the following commands for 1)download the code files, 2) go to your workspace directory:   
 
   ~~~python
   !git clone https://github.com/xinluo2018/Earth-surface-water-mapping.git  
