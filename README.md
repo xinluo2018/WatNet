@@ -22,5 +22,5 @@
 
 
 ## Step 3
-- Surface water mapping through running the code file **_infer_demo.ipynb_**, the user can replace your own sentinel-2 image in the test_image_demo directory. Bands order is blue-green-red-nir-swir1-swir2, and the 20-m bands should be downsampled to 10-m resolution.   
-- With the Dataset, the user can also train the WatNet through running the code file **_trainer.ipynb_**.  
+- Surface water mapping through running the code file **_infer_demo (full image)/infer_demo.ipynb_**, the user can replace your own sentinel-2 image in the test_image_demo directory. Bands order is blue-green-red-nir-swir1-swir2, and the 20-m bands should be downsampled to 10-m resolution.   
+- With the Dataset (~will be released shortly), the user can also train the WatNet through running the code file **_train/trainer.ipynb_**.  
