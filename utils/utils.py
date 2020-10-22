@@ -59,10 +59,12 @@ def writeTiff(im_data, im_geotrans, im_proj, path_out):
 def imgShow(img, num_bands, clip_percent):
     '''
     Arguments: 
-        img: (row, col, band)
+        img: (row, col, band) or (row, col)
         num_bands: a list/tuple, [red_band,green_band,blue_band]
         clip_percent: for linear strech, value within the range of 0-100. 
     '''
+    if len(img.shape) == 2:
+        img = img[:,:,np.newaxis]
     img_color = img[:,:,[num_bands[0],num_bands[1],num_bands[2]]]
     where_are_NaNs = np.isnan(img_color)
     img_color[where_are_NaNs] = 0
