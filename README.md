@@ -1,26 +1,23 @@
-# Earth Surface Water Mapping with Satellite Image
+# WatNet
+## —— A deep ConvNet for surface water mapping based on Sentinel-2 image
 
-**_We recommend that the user run these code on [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb) platform, thus the tedious environment configuration is not required for your local computer._** 
+## **How to use the trained WatNet?**
 
-## Step 1
-- Go to your google drive, create a new colab file, and then enter the commands for 1)Mount on google drive, 2) go to your root directory:    
-
-  ~~~python
-  from google.colab import drive  
-  drive.mount('/content/drive/')  
-  import os    
-  os.chdir("/content/drive/My Drive")*  
-  ~~~
-
-## Step 2
+### Step 1
 - Enter the following commands for 1)download the code files, 2) go to your workspace directory:   
 
-  ~~~python
-  !git clone https://github.com/xinluo2018/Earth-surface-water-mapping.git  
-  os.chdir("/content/drive/My Drive/Earth-surface-water-mapping")
+  ~~~console
+  git clone https://github.com/xinluo2018/WatNet.git
   ~~~
 
+### Step 2
+- Download Sentinel-2 images, and select four visible-near infrared 10-m bands and two 20-m shortwave infrared bands, which corresponding to the band number of 2, 3, 4, 8, 11, and 12 of sentinel-2 image.
 
-## Step 3
-- Surface water mapping through running the code file **_infer_demo (full image)/infer_demo.ipynb_**, the user can replace your own sentinel-2 image in the test_image_demo directory. Bands order is blue-green-red-nir-swir1-swir2, and the 20-m bands should be downsampled to 10-m resolution.   
-- With the Dataset (~will be released shortly), the user can also train the WatNet through running the code file **_train/trainer.ipynb_**.  
+### Step 3
+- Add the prepared sentinel-2 image (6 bands) to the **_data/test-data(demo)_** directory, and modify the data path in the **_notebooks/infer_demo.ipynb_** file. then surface water mapping can be performed by running the code file: **_notebooks/infer_demo.ipynb_** (this code will run a sample without any modification to be made.)
+
+
+## **How to train the WatNet?**
+
+- With the Dataset (~will be released shortly), the user can train the WatNet through running the code file **_train/trainer.ipynb_**.  
+

@@ -1,8 +1,4 @@
 
-try:
-    get_ipython().magic(u'tensorflow_version 2.x')
-except Exception:
-    pass
 import tensorflow as tf
 from osgeo import gdal
 import matplotlib.pyplot as plt

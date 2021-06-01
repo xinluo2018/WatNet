@@ -1,13 +1,9 @@
 
-try:
-    get_ipython().magic(u'tensorflow_version 2.x')
-except Exception:
-    pass
 import tensorflow as tf
 import numpy as np
 import random
 import pathlib
-from utils.utils import readTiff
+from utils.tiff_io import readTiff
 
 ###  Get the pathes (string) corresponding to image pathes, return a list
 def get_path(folder_Scenes, folder_Truths):    
@@ -25,10 +21,10 @@ def load_scene(Scene_paths, Truth_paths, Patch_size):
     Truths = list(range(len(Scene_paths)))
     Radios = list(range(len(Scene_paths)))  
     for i in range(len(Scene_paths)):
-        Scenes[i], _, _, im_row,im_col, _ = readTiff(Scene_paths[i])
-        Truths[i], _, _, _, _, _ = readTiff(Truth_paths[i])
-        Truths[i] = np.expand_dims(Truths[i], axis=2)
-        Radios[i] = (im_row//Patch_size+1)*(im_col//Patch_size+1)
+        Scenes_src,Scenes[i] = readTiff(Scene_paths[i])
+        _,Truths[i] = readTiff(Truth_paths[i])
+        _,Truths[i] = np.expand_dims(Truths[i], axis=2)
+        Radios[i] = (Scenes_src.height//Patch_size+1)*(Scenes_src.width//Patch_size+1)
     ## the Radios = Scenes area/Patch area
     return Scenes, Truths, Radios
 

@@ -1,15 +1,8 @@
-
-try:
-    get_ipython().magic(u'tensorflow_version 2.x')
-except Exception:
-    pass
 import tensorflow as tf
 from tensorflow.keras.layers import Lambda
 import tensorflow.keras.backend as backend
 import tensorflow.keras.layers as layers
 import tensorflow.keras.models as models
-
-
 
 ##### MobileNetV2
 relu6 = tf.keras.layers.ReLU(6.)
@@ -170,3 +163,7 @@ def DeepLabV3Plus_improve(input_shape, base_model, d_feature, m_feature, l_featu
     model = models.Model(inputs=base_model.input, outputs=x_2, name='DeepLabV3_Plus_improve')
     print(f'*** Output_Shape => {model.output_shape} ***')
     return model
+
+model = DeepLabV3Plus_improve(input_shape=(512, 512, 6), base_model=MobileNetV2,  
+                      d_feature=91, m_feature=24, l_feature=11, nclasses=2)
+model.summary()
