@@ -1,0 +1,7 @@
+data/dataset-s2
+data/tfrecord-s2
+data/test-data
+data/visualization-gis
+.vscode
+.DS_Store
+*__pycache__/
