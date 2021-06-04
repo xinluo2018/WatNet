@@ -1,20 +1,10 @@
 import random
 import tensorflow as tf
 
-def crop_patch(img, truth, width, height):
-    assert img.shape[0] >= height
-    assert img.shape[1] >= width
-    row_start = random.randint(0, img.shape[0]-height)
-    col_start = random.randint(0, img.shape[1]-width)
-    patch = img[row_start:row_start+height, col_start:col_start+width]
-    truth = truth[row_start:row_start+height, col_start:col_start+width]
-    return patch, truth
-
-
-def image_aug(image, truth, flip = True, rot = True, noisy = True):
+def img_aug(image, truth, flip = True, rot = True, noisy = True):
     '''Data augmentation: noisy, filp, rotate. '''
-    image = tf.convert_to_tensor(image, dtype=tf.float32)
-    truth = tf.convert_to_tensor(truth, dtype=tf.float32)    
+    # image = tf.convert_to_tensor(image, dtype=tf.float32)
+    # truth = tf.convert_to_tensor(truth, dtype=tf.float32)    
     if len(truth.shape) == 2:
         truth = tf.expand_dims(truth, axis=-1)
     if flip == True:
@@ -32,7 +22,7 @@ def image_aug(image, truth, flip = True, rot = True, noisy = True):
             truth = tf.image.rot90(truth, k=degree)
     if noisy == True:
         if tf.random.uniform(()) > 0.5:
-            std = random.uniform(0.002, 0.02)
+            std = random.uniform(0.001, 0.05)
             gnoise = tf.random.normal(shape=tf.shape(image), mean=0.0, stddev=std, dtype=tf.float32)
             image = tf.add(image, gnoise)
     return image, truth

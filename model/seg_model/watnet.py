@@ -1,10 +1,11 @@
+import os
 import sys
-sys.path.append('/Users/luo/OneDrive/Open-source-project/WatNet')
+sys.path.append(os.getcwd())
 import tensorflow as tf
 import tensorflow.keras.backend as backend
 import tensorflow.keras.layers as layers
 import tensorflow.keras.models as models
-from models.base_model.mobilenetv2 import MobileNetV2
+from model.base_model.mobilenetv2 import MobileNetV2
 
 ##### improved DeepLabV3+
 def upsample(tensor, size_1):  
@@ -132,3 +133,4 @@ def watnet(input_shape, nclasses=2):
 
 # model = watnet(input_shape=(512, 512, 6), nclasses=2)
 # model.summary()
+

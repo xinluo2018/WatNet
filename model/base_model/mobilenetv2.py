@@ -25,6 +25,7 @@ def _inverted_residual_block(inputs, filters, kernel, t, strides, n):
     return x
 
 def MobileNetV2(input_shape, nclasses=2):
+    
     """
     # Arguments
         input_shape: An integer or tuple/list of 3 integers, shape

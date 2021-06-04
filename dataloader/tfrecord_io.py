@@ -28,9 +28,6 @@ def image_example(image,truth):
     }
     return tf.train.Example(features=tf.train.Features(feature=feature))
 
-
-
-
 '''-------------read in-------------'''
 featuresDict = {
     'bandShape': tf.io.FixedLenFeature([2,],dtype=tf.int64),
@@ -59,7 +56,4 @@ def toPatchPair(inputs):
     cropped_stacked = tf.image.random_crop(
                     stacked, size=[512, 512, len(mergeBand)])
     return cropped_stacked[:,:,:len(feaBand)], cropped_stacked[:,:,len(feaBand):]
-
-
-
 
