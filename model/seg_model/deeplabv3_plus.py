@@ -28,75 +28,62 @@ class Concatenate(layers.Concatenate):
     def call(self, inputs):
         return backend.concatenate(inputs, self.axis)
 
-class deeplabv3_plus(tf.keras.Model):
-    def __init__(self, nclasses, base_model='Xception-DeepLab', **kwargs):
-        super(deeplabv3_plus, self).__init__(**kwargs)
-        """
-        The initialization of DeepLabV3Plus.
-        :param num_classes: the number of predicted classes.
-        :param version: 'DeepLabV3Plus'
-        :param base_model: the backbone model
-        :param kwargs: other parameters
-        """
-        dilation = [1, 2]
-        self.base_model = base_model
-        self.nclasses = nclasses
-        self.dilation = dilation
-        self.encoder = Xception(version=base_model, dilation=dilation)
+def _conv_bn_relu(x, filters, kernel_size, strides=1):
+    x = layers.Conv2D(filters, kernel_size, strides=strides, padding='same')(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.ReLU()(x)
+    return x
 
-    def call(self, inputs):
-        nclasses = self.nclasses
-        _, h, w, _ = backend.int_shape(inputs)
-        self.aspp_size = (h // 16, w // 16)
-        c2, c5 = self.encoder(inputs, output_stages=['c1', 'c5'])
+def _aspp(x, out_filters, aspp_size):
+    xs = list()
+    x1 = layers.Conv2D(out_filters, 1, strides=1)(x)
+    xs.append(x1)
 
-        x = self._aspp(c5, 256)
-        x = layers.Dropout(rate=0.5)(x)
+    for i in range(3):
+        xi = layers.Conv2D(out_filters, 3, strides=1, padding='same', dilation_rate=6 * (i + 1))(x)
+        xs.append(xi)
+    img_pool = GlobalAveragePooling2D(keep_dims=True)(x)
+    img_pool = layers.Conv2D(out_filters, 1, 1, kernel_initializer='he_normal')(img_pool)
+    img_pool = layers.UpSampling2D(size=aspp_size, interpolation='bilinear')(img_pool)
+    xs.append(img_pool)
 
-        x = layers.UpSampling2D(size=(4, 4), interpolation='bilinear')(x)
-        x = self._conv_bn_relu(x, 48, 1, strides=1)
+    x = Concatenate(out_size=aspp_size)(xs)
+    x = layers.Conv2D(out_filters, 1, strides=1, kernel_initializer='he_normal')(x)
+    x = layers.BatchNormalization()(x)
+    return x
+    
 
-        x = Concatenate(out_size=self.aspp_size)([x, c2])
-        x = self._conv_bn_relu(x, 256, 3, 1)
-        x = layers.Dropout(rate=0.5)(x)
+def deeplabv3_plus(nclasses, input_shape=(256,256,3)):
+    dilation = [1, 2]
+    input = layers.Input(shape=input_shape)
+    aspp_size = (input_shape[0] // 16, input_shape[1] // 16)
+    encoder = Xception(version='Xception-DeepLab', dilation=dilation)
+    c2, c5 = encoder(input, output_stages=['c1', 'c5'])
+    x = _aspp(c5, 256, aspp_size)
+    x = layers.Dropout(rate=0.5)(x)
 
-        x = self._conv_bn_relu(x, 256, 3, 1)
-        x = layers.Dropout(rate=0.1)(x)
-        if nclasses == 2:
-            x = layers.Conv2D(1, 1, strides=1, activation= 'sigmoid')(x)
-        else:
-            x = layers.Conv2D(nclasses, 1, strides=1, activation='softmax')(x)
-        x = layers.UpSampling2D(size=(4, 4), interpolation='bilinear')(x)
-        outputs = x
-        return outputs
-        # return models.Model(inputs, outputs, name='deeplabv3_plus')
+    x = layers.UpSampling2D(size=(4, 4), interpolation='bilinear')(x)
+    x = _conv_bn_relu(x, 48, 1, strides=1)
 
-    def _conv_bn_relu(self, x, filters, kernel_size, strides=1):
-        x = layers.Conv2D(filters, kernel_size, strides=strides, padding='same')(x)
-        x = layers.BatchNormalization()(x)
-        x = layers.ReLU()(x)
-        return x
+    x = Concatenate(out_size=aspp_size)([x, c2])
+    x = _conv_bn_relu(x, 256, 3, 1)
+    x = layers.Dropout(rate=0.5)(x)
 
-    def _aspp(self, x, out_filters):
-        xs = list()
-        x1 = layers.Conv2D(out_filters, 1, strides=1)(x)
-        xs.append(x1)
+    x = _conv_bn_relu(x, 256, 3, 1)
+    x = layers.Dropout(rate=0.1)(x)
+    if nclasses == 2:
+        x = layers.Conv2D(1, 1, strides=1, activation= 'sigmoid')(x)
+    else:
+        x = layers.Conv2D(nclasses, 1, strides=1, activation='softmax')(x)
+    x = layers.UpSampling2D(size=(4, 4), interpolation='bilinear')(x)
+    outputs = x
+    # return outputs
+    return models.Model(input, outputs, name='deeplabv3_plus')
 
-        for i in range(3):
-            xi = layers.Conv2D(out_filters, 3, strides=1, padding='same', dilation_rate=6 * (i + 1))(x)
-            xs.append(xi)
-        img_pool = GlobalAveragePooling2D(keep_dims=True)(x)
-        img_pool = layers.Conv2D(out_filters, 1, 1, kernel_initializer='he_normal')(img_pool)
-        img_pool = layers.UpSampling2D(size=self.aspp_size, interpolation='bilinear')(img_pool)
-        xs.append(img_pool)
 
-        x = Concatenate(out_size=self.aspp_size)(xs)
-        x = layers.Conv2D(out_filters, 1, strides=1, kernel_initializer='he_normal')(x)
-        x = layers.BatchNormalization()(x)
-        return x
+# input_img = tf.ones([4, 512, 512, 6], tf.float32)
+# model = deeplabv3_plus(nclasses=2, input_shape=(512,512,6))
+# oupt = model(inputs=input_img)
+# print(oupt.shape)
+# model.summary()
 
-input = tf.ones([4, 256, 256, 4],tf.float32)
-# input = layers.Input(shape=(256,256,3))
-model = deeplabv3_plus(nclasses=2)
-oupt = model(inputs=input)
-print(oupt.shape)

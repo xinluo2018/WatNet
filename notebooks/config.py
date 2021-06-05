@@ -1,6 +1,6 @@
 import tensorflow as tf
 from utils.metrics import miou_binary
-
+import math
 ## ---- root dir ---- ##
 root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
 # root = '/content/drive/My Drive/WatNet'    # colab
@@ -9,14 +9,27 @@ root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
 patch_size = 512
 num_bands = 6
 epochs = 100
-lr = 0.001
+lr = 0.002
 batch_size = 4
 buffer_size = 200
+size_tra_scene = 65
+step_per_epoch = math.ceil(size_tra_scene/batch_size)
+
 
 ## ---- configuration for model training ---- ##
+class lr_schedule(tf.keras.optimizers.schedules.LearningRateSchedule):    
+  def __init__(self, initial_learning_rate, steps_all):
+    self.initial_learning_rate = initial_learning_rate
+    self.steps_all = steps_all
+  def __call__(self, step):
+     return self.initial_learning_rate*((1-step/self.steps_all)**0.9)
+# lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+#     initial_learning_rate=lr,
+#     decay_steps=100,    # 1 step = 1 batch data
+#     decay_rate=0.9)
 loss_bce = tf.keras.losses.BinaryCrossentropy()
-opt_adam = tf.keras.optimizers.Adam(lr)
-
+opt_adam = tf.keras.optimizers.Adam(learning_rate=\
+                            lr_schedule(lr,step_per_epoch*epochs))
 
 ## ---- metrics ---- ##
 tra_loss = tf.keras.metrics.Mean(name="tra_loss")

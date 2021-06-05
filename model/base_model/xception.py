@@ -2,11 +2,14 @@
 '''reference: https://github.com/luyanger1799/Amazing-Semantic-Segmentation
 '''
 
+import os
+import sys
+sys.path.append(os.getcwd())
 import tensorflow as tf
 import tensorflow.keras.layers as layers
 import tensorflow.keras.backend as backend
 
-class Xception(tf.keras.Model):
+class Xception():
     def __init__(self, version='Xception', dilation=None, **kwargs):
         """
         The Xception is used to structure DeepLabV3Plus based on Tensorflow.
@@ -21,7 +24,7 @@ class Xception(tf.keras.Model):
         assert len(self.strides) == 2
         assert version in ['Xception', 'Xception-DeepLab']
 
-    def call(self, inputs, output_stages='c5', **kwargs):
+    def __call__(self, inputs, output_stages='c5', **kwargs):
         """
         call for Xception or Xception-DeepLab.
         :param inputs: a 4-D tensor.
@@ -239,7 +242,9 @@ class Xception(tf.keras.Model):
             return [self.outputs[ci] for ci in output_stages]
 
 
-# input = tf.ones([4, 256, 256, 4],tf.float32)
-# model = Xception()
-# oupt = model(inputs=input, output_stages=['c1', 'c5'])
-# print(oupt[0].shape, oupt[1].shape)
+input = tf.ones([4, 256, 256, 4],tf.float32)
+model = Xception()
+oupt = model(inputs=input, output_stages=['c1', 'c5'])
+print(oupt[0].shape, oupt[1].shape)
+# print(model.summary())
+
