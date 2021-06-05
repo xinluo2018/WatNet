@@ -1,3 +1,4 @@
+
 """
 @Reference: https://github.com/luyanger1799/amazing-semantic-segmentation
 """
@@ -9,7 +10,6 @@ import tensorflow.keras.layers as layers
 import tensorflow.keras.models as models
 import tensorflow.keras.backend as backend
 from model.base_model.xception import Xception
-
 
 class GlobalAveragePooling2D(layers.GlobalAveragePooling2D):
     def __init__(self, keep_dims=False, **kwargs):
@@ -25,13 +25,12 @@ class Concatenate(layers.Concatenate):
     def __init__(self, out_size=None, axis=-1, name=None):
         super(Concatenate, self).__init__(axis=axis, name=name)
         self.out_size = out_size
-
     def call(self, inputs):
         return backend.concatenate(inputs, self.axis)
 
-
-class DeepLabV3Plus():
-    def __init__(self, num_classes, version='DeepLabV3Plus', base_model='Xception-DeepLab', **kwargs):
+class deeplabv3_plus(tf.keras.Model):
+    def __init__(self, nclasses, base_model='Xception-DeepLab', **kwargs):
+        super(deeplabv3_plus, self).__init__(**kwargs)
         """
         The initialization of DeepLabV3Plus.
         :param num_classes: the number of predicted classes.
@@ -40,48 +39,16 @@ class DeepLabV3Plus():
         :param kwargs: other parameters
         """
         dilation = [1, 2]
-        self.base_model = 'Xception-DeepLab' if base_model is None else base_model
-        self.num_classes = num_classes
-        assert version == 'DeepLabV3Plus'
-        assert base_model in ['VGG16',
-                              'VGG19',
-                              'ResNet50',
-                              'ResNet101',
-                              'ResNet152',
-                              'DenseNet121',
-                              'DenseNet169',
-                              'DenseNet201',
-                              'DenseNet264',
-                              'MobileNetV1',
-                              'MobileNetV2',
-                              'Xception-DeepLab']
-        # super(DeepLabV3Plus, self).__init__(num_classes, version, base_model, dilation, **kwargs)
+        self.base_model = base_model
+        self.nclasses = nclasses
         self.dilation = dilation
-        self.encoder = Xception(base_model, dilation=dilation)
+        self.encoder = Xception(version=base_model, dilation=dilation)
 
-    def __call__(self, inputs=None, input_size=None, **kwargs):
-        assert inputs is not None or input_size is not None
-
-        if inputs is None:
-            assert isinstance(input_size, tuple)
-            inputs = layers.Input(shape=input_size + (3,))
-        return self._deeplab_v3_plus(inputs)
-
-    def _deeplab_v3_plus(self, inputs):
-        num_classes = self.num_classes
+    def call(self, inputs):
+        nclasses = self.nclasses
         _, h, w, _ = backend.int_shape(inputs)
         self.aspp_size = (h // 16, w // 16)
-
-        if self.base_model in ['VGG16',
-                               'VGG19',
-                               'ResNet50',
-                               'ResNet101',
-                               'ResNet152',
-                               'MobileNetV1',
-                               'MobileNetV2']:
-            c2, c5 = self.encoder(inputs, output_stages=['c2', 'c5'])
-        else:
-            c2, c5 = self.encoder(inputs, output_stages=['c1', 'c5'])
+        c2, c5 = self.encoder(inputs, output_stages=['c1', 'c5'])
 
         x = self._aspp(c5, 256)
         x = layers.Dropout(rate=0.5)(x)
@@ -95,12 +62,14 @@ class DeepLabV3Plus():
 
         x = self._conv_bn_relu(x, 256, 3, 1)
         x = layers.Dropout(rate=0.1)(x)
-
-        x = layers.Conv2D(num_classes, 1, strides=1)(x)
+        if nclasses == 2:
+            x = layers.Conv2D(1, 1, strides=1, activation= 'sigmoid')(x)
+        else:
+            x = layers.Conv2D(nclasses, 1, strides=1, activation='softmax')(x)
         x = layers.UpSampling2D(size=(4, 4), interpolation='bilinear')(x)
-
         outputs = x
-        return models.Model(inputs, outputs, name=self.version)
+        return outputs
+        # return models.Model(inputs, outputs, name='deeplabv3_plus')
 
     def _conv_bn_relu(self, x, filters, kernel_size, strides=1):
         x = layers.Conv2D(filters, kernel_size, strides=strides, padding='same')(x)
@@ -124,11 +93,10 @@ class DeepLabV3Plus():
         x = Concatenate(out_size=self.aspp_size)(xs)
         x = layers.Conv2D(out_filters, 1, strides=1, kernel_initializer='he_normal')(x)
         x = layers.BatchNormalization()(x)
-
         return x
 
-
-input = tf.ones([1, 256, 256, 4],tf.float32)
-model = DeepLabV3Plus(num_classes=2, base_model='Xception-DeepLab')
+input = tf.ones([4, 256, 256, 4],tf.float32)
+# input = layers.Input(shape=(256,256,3))
+model = deeplabv3_plus(nclasses=2)
 oupt = model(inputs=input)
-print(oupt)
+print(oupt.shape)

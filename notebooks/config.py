@@ -9,7 +9,7 @@ root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
 patch_size = 512
 num_bands = 6
 epochs = 100
-lr = 0.005
+lr = 0.001
 batch_size = 4
 buffer_size = 200
 
