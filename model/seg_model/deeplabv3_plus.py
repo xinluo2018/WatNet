@@ -51,9 +51,8 @@ def _aspp(x, out_filters, aspp_size):
     x = layers.Conv2D(out_filters, 1, strides=1, kernel_initializer='he_normal')(x)
     x = layers.BatchNormalization()(x)
     return x
-    
 
-def deeplabv3_plus(nclasses, input_shape=(256,256,3)):
+def deeplabv3_plus(nclasses, input_shape=(256,256,6)):
     dilation = [1, 2]
     input = layers.Input(shape=input_shape)
     aspp_size = (input_shape[0] // 16, input_shape[1] // 16)

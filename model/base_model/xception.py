@@ -242,9 +242,9 @@ class Xception():
             return [self.outputs[ci] for ci in output_stages]
 
 
-input = tf.ones([4, 256, 256, 4],tf.float32)
-model = Xception()
-oupt = model(inputs=input, output_stages=['c1', 'c5'])
-print(oupt[0].shape, oupt[1].shape)
+# input = tf.ones([4, 256, 256, 4],tf.float32)
+# model = Xception()
+# oupt = model(inputs=input, output_stages=['c1', 'c5'])
+# print(oupt[0].shape, oupt[1].shape)
 # print(model.summary())
 

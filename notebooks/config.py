@@ -1,5 +1,5 @@
 import tensorflow as tf
-from utils.metrics import miou_binary
+from utils.acc_patch import miou_binary
 import math
 ## ---- root dir ---- ##
 root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
@@ -8,12 +8,13 @@ root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
 ## ---- super-parameter for model training ---- ##
 patch_size = 512
 num_bands = 6
-epochs = 100
+epochs = 500
 lr = 0.002
 batch_size = 4
 buffer_size = 200
-size_tra_scene = 65
-step_per_epoch = math.ceil(size_tra_scene/batch_size)
+size_tra_scene = 64
+size_scene = 95
+step_per_epoch = math.ceil(size_scene/batch_size)
 
 
 ## ---- configuration for model training ---- ##
