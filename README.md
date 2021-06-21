@@ -4,7 +4,7 @@ A deep ConvNet for surface water mapping based on Sentinel-2 image
 ## **-- How to use the trained WatNet?**
 
 ### -- Step 1
-- Enter the following commands for 1)download the code files, 2) go to your workspace directory:   
+- Enter the following commands for downloading the code files, and then configure the python and deep learning environment. The deep learning software used in this repo is [Tensorflow 2](https://www.tensorflow.org/).
 
   ~~~console
   git clone https://github.com/xinluo2018/WatNet.git
@@ -21,7 +21,8 @@ A deep ConvNet for surface water mapping based on Sentinel-2 image
 
 - With the Dataset (~will be released shortly), the user can train the WatNet through running the code file **_train/trainer.ipynb_**.  
 
-## --Acknowledgement  
+## -- Acknowledgement  
 We thanks the authors for providing some of the code in this repo:  
 [deeplabv3_plus](https://github.com/luyanger1799/amazing-semantic-segmentation)  
 [deepwatmapv2](https://github.com/isikdogan/deepwatermap)  
+

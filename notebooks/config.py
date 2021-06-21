@@ -8,7 +8,7 @@ root = '/home/yons/Desktop/developer-luo/WatNet'   # local sever
 ## ---- super-parameter for model training ---- ##
 patch_size = 512
 num_bands = 6
-epochs = 500
+epochs = 300
 lr = 0.002
 batch_size = 4
 buffer_size = 200
