@@ -1,6 +1,7 @@
 data/dataset-s2
 data/tfrecord-s2
 data/test-data
+data/data-poyang
 result/
 data/visualization-gis
 model/pretrained/*
