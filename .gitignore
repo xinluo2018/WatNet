@@ -1,10 +1,11 @@
-data/dataset-s2
-data/dataset-l578
+data/dset-s2
+data/dset-l578
+data/dset-s2-deprecated
 data/tfrecord-s2
 data/tfrecord-l578
-data/dataset-s2-deprecated
 data/tfrecord-s2-deprecated
 data/test-data
+data/data-poyang
 result/
 data/visualization-gis
 model/pretrained/*
