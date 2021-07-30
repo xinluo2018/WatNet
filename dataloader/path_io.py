@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from utils.tiff_io import readTiff
+from utils.geotif_io import readTiff
 
 def read_scene_pair(paths_scene, paths_truth):
     '''read data from path and 0-1 normalization
@@ -9,8 +9,8 @@ def read_scene_pair(paths_scene, paths_truth):
     truths = []
     paths_scene_pair = zip(paths_scene, paths_truth)
     for path_scene, path_truth in paths_scene_pair:
-        _, scene = readTiff(path_scene)
-        _, truth = readTiff(path_truth)
+        scene,_ = readTiff(path_scene)
+        truth,_ = readTiff(path_truth)
         scene = np.clip(scene/10000,0,1)  # normalization
         scenes.append(scene)
         truths.append(truth)
@@ -30,7 +30,7 @@ def crop_patch(img, truth, width=512, height=512, _random=True):
     return patch, truth
 
 def crop_patches(imgs, truths, width=512, height=512, _random=True):
-    '''crop image to patch
+    '''crop images to patchs
     augs:
         imgs: a list contains images
         truths: a list contains image truths

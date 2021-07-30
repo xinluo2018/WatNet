@@ -83,7 +83,7 @@ def watnet(input_shape, nclasses=2):
                     to the deep, middle, and low layers of the backbone model
         nclass: number of classes.
     '''
-    print('*** Building DeepLabv3Plus Network ***')
+    print('*** Building watnet network ***')
     d_feature, m_feature, l_feature = 91, 24, 11
     (img_height, img_width, img_channel) = input_shape
     ## deep features
@@ -99,26 +99,43 @@ def watnet(input_shape, nclasses=2):
     x_b = layers.Activation('relu', name='low_level_activation')(x_b)
     ## middle features (1/2 patch size)
     x_c = base_model.get_layer(index = l_feature).output
-    x_c = layers.Conv2D(filters=48, kernel_size=1, padding='same',
-                 kernel_initializer='he_normal', name='low_level_projection_2', use_bias=False)(x_c)
+    x_c = layers.Conv2D(filters=48, 
+                        kernel_size=1, 
+                        padding='same',
+                        kernel_initializer='he_normal', 
+                        name='low_level_projection_2', 
+                        use_bias=False)(x_c)
     x_c = layers.BatchNormalization(name=f'bn_low_level_projection_2')(x_c)
     x_c = layers.Activation('relu', name='low_level_activation_2')(x_c)
     ## concat
     x = layers.concatenate([x_a, x_b], name='decoder_concat_1')
-    
-    x = layers.Conv2D(filters=128, kernel_size=3, padding='same', activation='relu',
-               kernel_initializer='he_normal', name='decoder_conv2d_1', use_bias=False)(x)
+    x = layers.Conv2D(filters=128, 
+                      kernel_size=3, 
+                      padding='same', 
+                      activation='relu',
+                      kernel_initializer='he_normal', 
+                      name='decoder_conv2d_1', 
+                      use_bias=False)(x)
     x = layers.BatchNormalization(name=f'bn_decoder_1')(x)
     x = layers.Activation('relu', name='activation_decoder_1')(x)
-    x = layers.Conv2D(filters=128, kernel_size=3, padding='same', activation='relu',
-               kernel_initializer='he_normal', name='decoder_conv2d_2', use_bias=False)(x)
+    x = layers.Conv2D(filters=128, 
+                      kernel_size=3, 
+                      padding='same', 
+                      activation='relu',
+                      kernel_initializer='he_normal', 
+                      name='decoder_conv2d_2', 
+                      use_bias=False)(x)
     x = layers.BatchNormalization(name=f'bn_decoder_2')(x)
     x = layers.Activation('relu', name='activation_decoder_2')(x)
     x = upsample(x, [img_height//2, img_width//2])
     ## concat
     x_2 = layers.concatenate([x, x_c], name='decoder_concat_3')
-    x_2 = layers.Conv2DTranspose(filters=128, kernel_size=3, strides=2, padding='same', 
-               kernel_initializer='he_normal', name='decoder_deconv2d', use_bias=False)(x_2)
+    x_2 = layers.Conv2DTranspose(filters=128, 
+                                kernel_size=3, 
+                                strides=2, 
+                                padding='same', 
+                                kernel_initializer='he_normal', 
+                                name='decoder_deconv2d', use_bias=False)(x_2)
     x_2 = layers.BatchNormalization(name=f'bn_decoder_4')(x_2)
     x_2 = layers.Activation('relu', name='activation_decoder_4')(x_2)
     last = tf.keras.layers.Conv2D(1, (1,1),
@@ -127,7 +144,7 @@ def watnet(input_shape, nclasses=2):
                         kernel_initializer='he_normal',
                         activation= 'sigmoid')  ## (bs, 256, 256, 1)
     x_2 = last(x_2)
-    model = models.Model(inputs=base_model.input, outputs=x_2, name='DeepLabV3_Plus_improve')
+    model = models.Model(inputs=base_model.input, outputs=x_2, name='watnet')
     print(f'*** Output_Shape => {model.output_shape} ***')
     return model
 
