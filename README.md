@@ -10,50 +10,28 @@ A deep ConvNet for surface water mapping based on Sentinel-2 image
 [Google Drive](https://drive.google.com/drive/folders/1f8HPAe2wBUga-ImiYnFxaGlHGzvMDKF4?usp=sharing) and [Baidu Drive](https://pan.baidu.com/s/1V-k3me1gT0ph4kRmNrDnIw) (Fetch Code: uic2)  
 
 
-<div align="left">
-<img src=figures/dataset.png height="310px" alt=distribution >
-</div>
+![dataset](figures/dataset.png)
 
 |Labeling example 1:|Labeling example 2:|
 | :-- | :-- |
 | ![example_1](figures/label_sam_1.png)| ![example_2](figures/label_sam_2.png)|
 
-# -- performance
+# -- Performance
 - Examples for surface water mapping  
+
   **Urban region**  
-  <!-- <div align="left">
-  <img src=figures/urban/urban-scene.png height="100px" alt= urban_scene>
-  <img src=figures/urban/urban-awei.png height="100px" alt= urban_awei>
-  <img src=figures/urban/urban-mndwi.png height="100px" alt= urban_mndwi >
-  <img src=figures/urban/urban-watnet.png height="100px" alt= urban_watnet>
-  </div> -->
-  |||||  
-  |--|--|--|--|  
+  |Urban scene|AWEI|MNDWI|WatNet|  
+  |:--|:--|:--|:--|  
   |![urban_scene](figures/urban/urban-scene.png)|![urban-awei](figures/urban/urban-awei.png)|![urban-mndwi](figures/urban/urban-mndwi.png)|![urban-watnet](figures/urban/urban-watnet.png)|
 
-
   **Cloudy region**  
-  <!-- <div align="left">
-  <img src=figures/cloudy/cloudy-scene.png height="100px" alt= cloudy_scene>
-  <img src=figures/cloudy/cloudy-awei.png height="100px" alt= cloudy_awei>
-  <img src=figures/cloudy/cloudy-obia.png height="100px" alt= cloudy_obia >
-  <img src=figures/cloudy/cloudy-watnet.png height="100px" alt= cloudy_watnet>
-  </div> -->
-  |||||  
-  |--|--|--|--|  
+  |Cloudy scene|AWEI|MNDWI|WatNet|  
+  |:--|:--|:--|:--|  
   |![cloudy_scene](figures/cloudy/cloudy-scene.png)|![cloudy-awei](figures/cloudy/cloudy-awei.png)|![cloudy-mndwi](figures/cloudy/cloudy-obia.png)|![cloudy-watnet](figures/cloudy/cloudy-watnet.png)|
 
-
-
   **Mountainous region**  
-  <!-- <div align="left">
-  <img src=figures/mountain/mountain-scene.png height="100px" alt= mountain_scene>
-  <img src=figures/mountain/mountain-awei.png height="100px" alt= mountain_awei>
-  <img src=figures/mountain/mountain-obia.png height="100px" alt= mountain_obia >
-  <img src=figures/mountain/mountain-watnet.png height="100px" alt= mountain_watnet> -->
-  <!-- </div> -->
-  |||||  
-  |--|--|--|--|  
+  |Mountain scene|AWEI|MNDWI|WatNet|  
+  |:--|:--|:--|:--|  
   |![mountain_scene](figures/mountain/mountain-scene.png)|![mountain-awei](figures/mountain/mountain-awei.png)|![mountain-mndwi](figures/mountain/mountain-obia.png)|![mountain-watnet](figures/mountain/mountain-watnet.png)|
 
 
@@ -83,15 +61,15 @@ A deep ConvNet for surface water mapping based on Sentinel-2 image
   python watnet_infer.py data/test-demo/*.tif -o data/test-demo/result
   ~~~
 
-
-
-
 ## **-- How to train the WatNet?**
 
 - With the Dataset (~will be released shortly), the user can train the WatNet through running the code file **_train/trainer.ipynb_**.  
 
+## -- Citation (~~ on publishment)
+
+
+
 ## -- Acknowledgement  
 We thanks the authors for providing some of the code in this repo:  
-[deeplabv3_plus](https://github.com/luyanger1799/amazing-semantic-segmentation)  
-[deepwatmapv2](https://github.com/isikdogan/deepwatermap)  
+[deeplabv3_plus](https://github.com/luyanger1799/amazing-semantic-segmentation) and [deepwatmapv2](https://github.com/isikdogan/deepwatermap)  
 
