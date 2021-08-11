@@ -3,8 +3,6 @@
 
   ![watnet](figures/watnet_structure.png)
 
-
-
 # -- DataSet
 - Surface water dataset for Deep learning could be downloaded from:  
 [**Google Drive**](https://drive.google.com/drive/folders/1f8HPAe2wBUga-ImiYnFxaGlHGzvMDKF4?usp=sharing) and [**Baidu Drive**](https://pan.baidu.com/s/1V-k3me1gT0ph4kRmNrDnIw) (Fetch Code: uic2)  
@@ -66,9 +64,7 @@
 
 ## -- Citation (~~ on publishment)
 
-
-
 ## -- Acknowledgement  
-We thanks the authors for providing some of the code in this repo:  
+- We thanks the authors for providing some of the code in this repo:  
 [deeplabv3_plus](https://github.com/luyanger1799/amazing-semantic-segmentation) and [deepwatmapv2](https://github.com/isikdogan/deepwatermap)  
 
