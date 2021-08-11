@@ -1,20 +1,19 @@
 # -- WatNet
-A deep ConvNet for surface water mapping based on Sentinel-2 image
+- A deep ConvNet for surface water mapping based on Sentinel-2 image
 
-![watnet](figures/watnet_structure.png)
+  ![watnet](figures/watnet_structure.png)
 
 
 
-# -- WatSet
+# -- DataSet
 - Surface water dataset for Deep learning could be downloaded from:  
-[Google Drive](https://drive.google.com/drive/folders/1f8HPAe2wBUga-ImiYnFxaGlHGzvMDKF4?usp=sharing) and [Baidu Drive](https://pan.baidu.com/s/1V-k3me1gT0ph4kRmNrDnIw) (Fetch Code: uic2)  
+[**Google Drive**](https://drive.google.com/drive/folders/1f8HPAe2wBUga-ImiYnFxaGlHGzvMDKF4?usp=sharing) and [**Baidu Drive**](https://pan.baidu.com/s/1V-k3me1gT0ph4kRmNrDnIw) (Fetch Code: uic2)  
 
+  ![dataset](figures/dataset.png)
 
-![dataset](figures/dataset.png)
-
-|Labeling example 1:|Labeling example 2:|
-| :-- | :-- |
-| ![example_1](figures/label_sam_1.png)| ![example_2](figures/label_sam_2.png)|
+  |Labeling example 1:|Labeling example 2:|
+  | :-- | :-- |
+  | ![example_1](figures/label_sam_1.png)| ![example_2](figures/label_sam_2.png)|
 
 # -- Performance
 - Examples for surface water mapping  
@@ -52,10 +51,10 @@ A deep ConvNet for surface water mapping based on Sentinel-2 image
 - Users also can specify the program for surface water mapping by using the watnet_infer.py, specifically,  
 - --- funtional API:
 
-```python
-   from watnet_infer import watnet_infer   
-   water_map = watnet_infer(rsimg)  # full example in notebooks/infer_demo.ipynb.
-```
+  ~~~python
+  from watnet_infer import watnet_infer   
+  water_map = watnet_infer(rsimg)  # full example in notebooks/infer_demo.ipynb.
+  ~~~
 - --- command line API:
   ~~~console
   python watnet_infer.py data/test-demo/*.tif -o data/test-demo/result
