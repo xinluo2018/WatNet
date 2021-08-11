@@ -1,16 +1,10 @@
 data/dset-s2
-data/dset-l578
-data/dset-s2-deprecated
 data/tfrecord-s2
-data/tfrecord-l578
-data/tfrecord-s2-deprecated
 data/test-data
-data/data-poyang
 result/
-data/visualization-gis
+data/visual-data-gis
 model/pretrained/*
 !model/pretrained/watnet*
 .vscode
 .DS_Store
 *__pycache__/
-dataloader/tfrecord_writer_landsat.ipynb

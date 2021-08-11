@@ -13,8 +13,7 @@ lr = 0.002
 batch_size = 4
 buffer_size = 200
 # size_tra_scene = 64
-# size_scene = 95
-size_scene = 95+31
+size_scene = 95
 step_per_epoch = math.ceil(size_scene/batch_size)
 
 
