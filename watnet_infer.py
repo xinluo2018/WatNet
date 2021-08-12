@@ -7,23 +7,24 @@ des: perform surface water mapping by using pretrained watnet
 example:
      funtional api:
         water_map = watnet_infer(rsimg) 
-        note: rsimg is np.array (row,col,band), value: [0,1]
      command line: 
+        python watnet_infer.py data/test-demo/*.tif
         python watnet_infer.py data/test-demo/*.tif -o data/test-demo/result
-
-
+    note: 
+        rsimg is np.array (row,col,band), value: [0,1]
+        data/test-demo/*.tif is the sentinel-2 image path
+        data/test-demo/result is output directory
 '''
+
 import os
 import numpy as np
 import tensorflow as tf
+import argparse
 from utils.imgPatch import imgPatch
 from utils.geotif_io import readTiff,writeTiff
-import argparse
-
 
 ## default path of the pretrained watnet model
 path_watnet = 'model/pretrained/watnet.h5'
-
 
 def get_args():
 
@@ -56,7 +57,6 @@ def watnet_infer(rsimg, path_model = path_watnet):
         retrun:
             water_map: np.array.
     '''
-
     ###  ----- load the pretrained model -----#
     model = tf.keras.models.load_model(path_model, compile=False)
     ### ------ apply the pre-trained model
@@ -85,6 +85,7 @@ if __name__ == '__main__':
         ofile = [os.path.splitext(file)[0] + '_water.tif' for file in ifile]
 
     for i in range(len(ifile)):
+        print('file in -->', ifile[i])
         ## image reading and normalization
         sen2_img, img_info = readTiff(path_in=ifile[i])
         sen2_img = np.float32(np.clip(sen2_img/10000, a_min=0, a_max=1))  ## normalization

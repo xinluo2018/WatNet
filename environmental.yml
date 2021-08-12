@@ -1,0 +1,20 @@
+name: venv-tf
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - gdal=3.2.1=py36h5adf297_0
+  - geos=3.8.1=he1b5a44_0
+  - geotiff=1.6.0=h5d11630_3
+  - gettext=0.19.8.1=h0b5b191_1005
+  - matplotlib=3.2.2=1
+  - numpy=1.19.5=py36h2aa4a07_1
+  - pandas=1.1.5=py36h284efc9_0
+  - proj=7.1.1=h966b41f_3
+  - python=3.6.13=hffdb5ce_0_cpython
+  - scikit-learn=0.24.2=py36h2fdd933_0
+  - scipy=1.5.3=py36h9e8f40b_0
+  - six=1.16.0=pyh6c4a22f_0
+  - pip:
+    - tensorflow==2.5.0
+prefix: /home/yons/miniconda3/envs/venv-tf

@@ -19,18 +19,18 @@
   **Urban region**  
   |Urban scene|AWEI|MNDWI|WatNet|  
   |:--|:--|:--|:--|  
-  |![urban_scene](figures/urban/urban-scene.png)|![urban-awei](figures/urban/urban-awei.png)|![urban-mndwi](figures/urban/urban-mndwi.png)|![urban-watnet](figures/urban/urban-watnet.png)|
+  |<img src=figures/urban/urban-scene.png width =120, height=100>|<img src=figures/urban/urban-awei.png width=120, height=100>|<img src=figures/urban/urban-mndwi.png width=120, height=100>|<img src=figures/urban/urban-watnet.png width=120, height=100>|
 
   **Cloudy region**  
-  |Cloudy scene|AWEI|MNDWI|WatNet|  
+  |Cloudy scene|AWEI|OBIA|WatNet|  
   |:--|:--|:--|:--|  
-  |![cloudy_scene](figures/cloudy/cloudy-scene.png)|![cloudy-awei](figures/cloudy/cloudy-awei.png)|![cloudy-mndwi](figures/cloudy/cloudy-obia.png)|![cloudy-watnet](figures/cloudy/cloudy-watnet.png)|
+  |<img src=figures/cloudy/cloudy-scene.png width =120, height=100>|<img src=figures/cloudy/cloudy-awei.png width =120, height=100>|<img src=figures/cloudy/cloudy-obia.png width=120, height=100>|<img src=figures/cloudy/cloudy-watnet.png width=120, height=100>|
 
   **Mountainous region**  
-  |Mountain scene|AWEI|MNDWI|WatNet|  
+  |Mountain scene|AWEI|OBIA|WatNet|  
   |:--|:--|:--|:--|  
-  |![mountain_scene](figures/mountain/mountain-scene.png)|![mountain-awei](figures/mountain/mountain-awei.png)|![mountain-mndwi](figures/mountain/mountain-obia.png)|![mountain-watnet](figures/mountain/mountain-watnet.png)|
-
+  |<img src=figures/mountain/mountain-scene.png width =120, height=100>|<img src=figures/mountain/mountain-awei.png width =120, height=100>|<img src=figures/mountain/mountain-obia.png width=120, height=100>|<img src=figures/mountain/mountain-watnet.png width=120, height=100>|
+  
 
 ## **-- How to use the trained WatNet?**
 
