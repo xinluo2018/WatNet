@@ -1,5 +1,5 @@
-data/dset-s2
-data/tfrecord-s2
+data/dset-s2/*
+data/tfrecord-s2/*
 data/test-data
 result/
 data/visual-data-gis
